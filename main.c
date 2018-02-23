@@ -153,6 +153,7 @@ int main() {
       if(*current_dir == 0){
           go_to_order(matrix, current_dir, current_floor);
           if(*current_dir == 0){
+            print_matrix(matrix);
             *current_dir = set_destination(matrix, *current_floor);
           }
         }
