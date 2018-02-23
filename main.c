@@ -155,31 +155,32 @@ int main() {
         bool at_intermediate = is_at_intermediate(matrix, *current_floor, *current_dir);
         bool at_order = is_at_order(matrix, *current_floor);
         if(at_destination){
-          printf("-----------DESTINATION---------");
+          printf("-----------DESTINATION---------\n");
           print_matrix(matrix);
           *current_dir = 0;
           matrix[*current_floor][2] = -1;
           erase_order(matrix, *current_floor);
-          printf("----------EDITED----------------");
+          printf("----------EDITED----------------\n");
           print_matrix(matrix);
         }
         else if(at_order){
-          printf("-----------ORDER---------");
+          printf("-----------ORDER---------\n");
           print_matrix(matrix);
           *current_dir = 0;
           elev_set_motor_direction(*current_dir);
           reset_floor(matrix, *current_floor);
           *current_dir = set_destination(matrix, *current_floor);
-          printf("----------EDITED----------------");
+          printf("----------EDITED----------------\n");
           print_matrix(matrix);
         }
         else if(at_intermediate){
-          printf("-----------INTERMEDIATE---------");
+          printf("-----------INTERMEDIATE---------\n");
           print_matrix(matrix);
           elev_set_motor_direction(0);
           reset_floor(matrix, *current_floor);
+          printf("----------reset floor %d----------------\n", *current_floor);
           set_destination(matrix, *current_floor);
-          printf("----------EDITED----------------");
+          printf("----------done reseting----------------\n", *current_floor);
           print_matrix(matrix);
         }
         elev_set_motor_direction(*current_dir);
