@@ -66,7 +66,7 @@ void go_to_order(int matrix[N_FLOORS][3], int* current_dir, int* current_floor){
   }
 }
 
-bool is_at_order(int matrx[N_FLOORS][3], int* current_floor){
+bool is_at_order(int matrix[N_FLOORS][3], int* current_floor){
   for(int i = 0; i < N_FLOORS; i++){
     if(*current_floor == matrix[i][2] && i == matrix[i][2]){
       return(true);
@@ -109,6 +109,10 @@ int set_destination(int matrix[N_FLOORS][3], int current_floor){
   return(get_sign(matrix[current_floor][2] - current_floor));
 }
 
+void reset_floor(int matrix[N_FLOORS][3], int current_floor){
+  matrix[current_floor][0] = 0, matrix[current_floor][1] = 0, matrix[current_floor][2] = -1;
+}
+
 int main() {
     // Initialize hardware
     int matrix[N_FLOORS][3] = {{0,0,-1},
@@ -134,7 +138,7 @@ int main() {
 
     while (1) {
       *current_floor = elev_get_floor_sensor_signal();
-      get_orders(matrix);
+      get_orders(matrix); 
       if(*current_dir == 0){
           go_to_order(matrix, current_dir, current_floor);
         }
@@ -145,11 +149,12 @@ int main() {
         if(at_destination){
           *current_dir = 0;
           matrix[*current_floor][2] = -1;
+          reset_floor(matrix, *current_floor);
         }
         else if(at_order){
           *current_dir = 0;
           elev_set_motor_direction(*current_dir);
-          *current_dir = set_destination(*current_floor);
+          *current_dir = set_destination(matrix, *current_floor);
         }
         /*else if(at_intermediate){
           elev_set_motor_direction(0);
