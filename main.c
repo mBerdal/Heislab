@@ -163,7 +163,7 @@ int main() {
           printf("----------EDITED----------------\n");
           print_matrix(matrix);
         }
-        else if(at_order){
+        if(at_order){
           printf("-----------ORDER---------\n");
           print_matrix(matrix);
           *current_dir = 0;
