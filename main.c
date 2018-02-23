@@ -142,6 +142,9 @@ void reset_floor(int matrix[N_FLOORS][3], int current_floor){
 
 int set_destination(int matrix[N_FLOORS][3], int current_floor){
   matrix[current_floor][2] = check_ordered_destination();
+  if(matrix[current_floor][2] == -1){
+    return(0);
+  }
   return(get_sign(matrix[current_floor][2] - current_floor));
 }
 
