@@ -210,7 +210,11 @@ int main() {
           reset_floor(matrix, *current_floor);
           printf("----------reseting floor %d----------------\n", *current_floor);
           print_matrix(matrix);
-          set_destination(matrix, *current_floor);
+          start_timer();
+          while(!check_timer(3)){
+            get_orders(matrix);
+            set_destination(matrix, *current_floor);
+          }
           //WAIT A BIT AND TAKE NEW ORDERS/DESTINATIONS
           printf("----------new order at floor %d----------------\n", *current_floor);
           print_matrix(matrix);
