@@ -64,7 +64,6 @@ void go_to_order(int matrix[N_FLOORS][3], int* current_dir, int* current_floor){
     }
   elev_set_motor_direction(*current_dir);
   }
-  return(min_distance);
 }
 
 bool is_at_order(int matrix[N_FLOORS][3], int current_floor){
@@ -115,16 +114,6 @@ void reset_floor(int matrix[N_FLOORS][3], int current_floor){
   matrix[current_floor][0] = 0, matrix[current_floor][1] = 0, matrix[current_floor][2] = -1;
 }
 
-void set_destination(int matrix[N_FLOORS][3], int current_floor, int MAX_TIME, int* current_dir){
-  int dir = set_destination(matrix, current_floor, MAX_TIME);
-  if(dir == MAX_TIME){
-    *current_dir = 0;
-  }
-  else{
-    *current_dir = dir;
-  }
-}
-
 int check_destination(int matrix[N_FLOORS][3], int current_floor, int MAX_TIME){
   int i = 0;
   while(matrix[current_floor][2] == -1 && i < MAX_TIME){
@@ -135,6 +124,16 @@ int check_destination(int matrix[N_FLOORS][3], int current_floor, int MAX_TIME){
     return(i);
   }
   return(get_sign(matrix[current_floor][2] - current_floor));
+}
+
+void set_destination(int matrix[N_FLOORS][3], int current_floor, int MAX_TIME, int* current_dir){
+  int dir = check_destination(matrix, current_floor, MAX_TIME);
+  if(dir == MAX_TIME){
+    *current_dir = 0;
+  }
+  else{
+    *current_dir = dir;
+  }
 }
 
 int main() {
