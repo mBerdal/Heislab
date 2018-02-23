@@ -136,6 +136,7 @@ int set_destination(int matrix[N_FLOORS][3], int current_floor){
   if(matrix[current_floor][2] == -1){
     return(0);
   }
+  printf("New destination from floor %d to floor %d", current_floor, matrix[current_floor][2]);
   return(get_sign(matrix[current_floor][2] - current_floor));
 }
 
@@ -191,7 +192,6 @@ int main() {
           }
           printf("----------TIMER DONE, EDITED----------------\n");
           print_matrix(matrix);
-          //WAIT A BIT AND TAKE NEW ORDERS/DESTINATIONS
         }
         if(at_order){
           printf("-----------ORDER---------\n");
@@ -216,7 +216,7 @@ int main() {
             set_destination(matrix, *current_floor);
           }
           //WAIT A BIT AND TAKE NEW ORDERS/DESTINATIONS
-          printf("----------new order at floor %d----------------\n", *current_floor);
+          printf("----------new destination at floor %d----------------\n", *current_floor);
           print_matrix(matrix);
         }
         elev_set_motor_direction(*current_dir);
