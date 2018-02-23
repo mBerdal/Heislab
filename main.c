@@ -193,13 +193,13 @@ int main() {
           print_matrix(matrix);
           *current_dir = 0;
           erase_order(matrix, *current_floor);
-          printf("----------EDITED----------------\n");
-          print_matrix(matrix);
           start_timer();
           while(!check_timer(3)){
             set_destination(matrix, *current_floor);
             get_orders(matrix);
           }
+          printf("----------EDITED----------------\n");
+          print_matrix(matrix);
         }
         if(at_order){
           printf("-----------ORDER---------\n");
@@ -207,7 +207,7 @@ int main() {
           *current_dir = 0;
           elev_set_motor_direction(*current_dir);
           reset_floor(matrix, *current_floor);
-           start_timer();
+          start_timer();
           while(!check_timer(3)){
             *current_dir = set_destination(matrix, *current_floor);
             get_orders(matrix);
