@@ -189,7 +189,7 @@ int main() {
             get_orders(matrix);
             set_destination(matrix, *current_floor);
           }
-          printf("----------TIMER DONE, EDITED----------------\n");
+          printf("----------TIMER DONE, EDITED----------------\nCurrent direction: %d\n", *current_dir);
           print_matrix(matrix);
         }
         if(at_order){
