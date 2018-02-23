@@ -148,6 +148,8 @@ int main() {
     elev_set_motor_direction(DIRN_UP);
     *current_dir = 1;
     *current_floor = start(current_dir);
+    printf("Startup complete. Stopped at floor %d. Current direction: %d\n", *current_floor, *current_dir);
+
 
     while (1) {
       *current_floor = elev_get_floor_sensor_signal();
