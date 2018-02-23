@@ -69,17 +69,22 @@ int get_sign(int val){
 }
 
 void go_to_order(int matrix[N_FLOORS][3], int* current_dir, int* current_floor){
-  int min_distance = N_FLOORS;
-  int min_index = 0;
-  for(int i = 0; i < N_FLOORS; i++){
-    if((matrix[i][0] != 0 || matrix[i][1] != 0) && abs(i - *current_floor) < abs(min_distance) && abs(i - *current_floor) != 0){
-      matrix[min_index][2] = -1;
-      min_distance = i - *current_floor;
-      matrix[*current_floor + min_distance][2] = i;
-      min_index = i;
-      *current_dir = get_sign(min_distance);
+  if(*current_dir != 0){
+    elev_set_motor_direction(*current_dir);
+  }
+  else{
+    int min_distance = N_FLOORS;
+    int min_index = 0;
+    for(int i = 0; i < N_FLOORS; i++){
+      if((matrix[i][0] != 0 || matrix[i][1] != 0) && abs(i - *current_floor) < abs(min_distance) && abs(i - *current_floor) != 0){
+        matrix[min_index][2] = -1;
+        min_distance = i - *current_floor;
+        matrix[*current_floor + min_distance][2] = i;
+        min_index = i;
+        *current_dir = get_sign(min_distance);
+      }
+      elev_set_motor_direction(*current_dir);
     }
-  elev_set_motor_direction(*current_dir);
   }
 }
 
@@ -139,6 +144,24 @@ int set_destination(int matrix[N_FLOORS][3], int current_floor){
   return(get_sign(matrix[current_floor][2] - current_floor));
 }
 
+void go_to_dest(int temp_dir, int* current_dir, int current_floor, int matrix[N_FLOORS][3]){
+  if(temp_dir == -1){
+    for(int i = current_floor; i > 0; i--){
+      if(matrix[i][2] != -1){
+        *current_dir = -1;
+      }
+    }
+  }
+  else if(temp_dir == 1){
+    for(int i = current_floor; i < N_FLOORS; i++){
+      if(matrix[i][2] != -1){
+        *current_dir = 1;
+      }
+    }
+  }
+  elev_set_motor_direction(*current_dir);
+}
+
 int main() {
     // Initialize hardware
     int matrix[N_FLOORS][3] = {{0,0,-1},
@@ -150,6 +173,8 @@ int main() {
     int* current_floor = &current_floor_val;
     int current_dir_val = 1;
     int* current_dir = &current_dir_val;
+    bool intermediate = false;
+    int dummy = 69;
 
     if (!elev_init()) {
         printf("Unable to initialize elevator hardware!\n");
@@ -180,6 +205,7 @@ int main() {
         if(at_destination){
           printf("-----------DESTINATION---------\n");
           print_matrix(matrix);
+          int* temp_dir = current_dir;
           *current_dir = 0;
           elev_set_motor_direction(*current_dir);
           matrix[*current_floor][2] = -1;
@@ -188,6 +214,10 @@ int main() {
           while(!check_timer(3) && matrix[*current_floor][2] == -1){
             get_orders(matrix);
             set_destination(matrix, *current_floor);
+          }
+          if(intermediate){
+            go_to_dest(temp_dir, current_dir, *current_floor, matrix);
+            intermediate = false;
           }
           printf("----------TIMER DONE, EDITED----------------\nCurrent direction: %d\n", *current_dir);
           print_matrix(matrix);
@@ -218,6 +248,7 @@ int main() {
             get_orders(matrix);
             set_destination(matrix, *current_floor);
           }
+          intermediate = true;
           //WAIT A BIT AND TAKE NEW ORDERS/DESTINATIONS
           printf("----------new destination at floor %d----------------\n", *current_floor);
           print_matrix(matrix);
