@@ -102,12 +102,19 @@ int check_ordered_destination(){
   return(-1);
 }
 
+void erase_order(int matrix[N_FLOORS][3], int current_floor){
+  for(int i = 0; i < N_FLOORS; i++){
+    if(matrix[i][2] == current_floor){
+      matrix[i][2] = -1;
+    }
+  }
+}
+
 void reset_floor(int matrix[N_FLOORS][3], int current_floor){
   matrix[current_floor][0] = 0, matrix[current_floor][1] = 0, matrix[current_floor][2] = -1;
 }
 
 int set_destination(int matrix[N_FLOORS][3], int current_floor){
-  reset_floor(matrix, current_floor);
   while(matrix[current_floor][2] == -1){
     matrix[current_floor][2] = check_ordered_destination();
   }
@@ -152,7 +159,7 @@ int main() {
           print_matrix(matrix);
           *current_dir = 0;
           matrix[*current_floor][2] = -1;
-          reset_floor(matrix, *current_floor);
+          erase_order(matrix, *current_floor);
           printf("----------EDITED----------------");
           print_matrix(matrix);
         }
@@ -161,6 +168,7 @@ int main() {
           print_matrix(matrix);
           *current_dir = 0;
           elev_set_motor_direction(*current_dir);
+          reset_floor(matrix, current_floor);
           *current_dir = set_destination(matrix, *current_floor);
           printf("----------EDITED----------------");
           print_matrix(matrix);
