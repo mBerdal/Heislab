@@ -147,7 +147,7 @@ int main() {
     int* current_floor = &current_floor_val;
     int current_dir_val = 1;
     int* current_dir = &current_dir_val;
-    int MAX_TIME = 10000;
+    int MAX_TIME = 1000000;
 
     if (!elev_init()) {
         printf("Unable to initialize elevator hardware!\n");
