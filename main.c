@@ -66,27 +66,27 @@ void go_to_order(int matrix[N_FLOORS][3], int* current_dir, int* current_floor){
   }
 }
 
-bool is_at_order(int matrix[N_FLOORS][3], int* current_floor){
+bool is_at_order(int matrix[N_FLOORS][3], int current_floor){
   for(int i = 0; i < N_FLOORS; i++){
-    if(*current_floor == matrix[i][2] && i == matrix[i][2]){
+    if(current_floor == matrix[i][2] && i == matrix[i][2]){
       return(true);
     }
   }
   return(false);
 }
 
-bool is_at_destiantion(int matrix[N_FLOORS][3], int* current_floor){
+bool is_at_destiantion(int matrix[N_FLOORS][3], int current_floor){
   for(int i = 0; i < N_FLOORS; i++){
-    if(*current_floor == matrix[i][2] && i != matrix[i][2]){
+    if(current_floor == matrix[i][2] && i != matrix[i][2]){
       return(true);
     }
   }
   return(false);
 }
 
-bool is_at_intermediate(int matrix[N_FLOORS][3], int* current_floor, int* current_dir){
+bool is_at_intermediate(int matrix[N_FLOORS][3], int current_floor, int current_dir){
   for(int i = 0; i < N_FLOORS; i++){
-    if(*current_floor != matrix[i][2] && matrix[i][get_index(current_dir)] == 1){
+    if(current_floor != matrix[i][2] && matrix[i][get_index(current_dir)] == 1 && i == current_floor){
       return(true);
     }
   }
@@ -151,9 +151,9 @@ int main() {
           go_to_order(matrix, current_dir, current_floor);
         }
       if (*current_dir!=0 && *current_floor != -1){
-        bool at_destination = is_at_destiantion(matrix, current_floor);
-        bool at_intermediate = is_at_intermediate(matrix, current_floor, current_dir);
-        bool at_order = is_at_order(matrix, current_floor);
+        bool at_destination = is_at_destiantion(matrix, *current_floor);
+        bool at_intermediate = is_at_intermediate(matrix, *current_floor, *current_dir);
+        bool at_order = is_at_order(matrix, *current_floor);
         if(at_destination){
           printf("-----------DESTINATION---------");
           print_matrix(matrix);
