@@ -184,7 +184,7 @@ int main() {
           matrix[*current_floor][2] = -1;
           erase_order(matrix, *current_floor);
           start_timer();
-          while(check_timer(3)){
+          while(!check_timer(3)){
             get_orders(matrix);
             set_destination(matrix, *current_floor);
           }
