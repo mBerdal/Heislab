@@ -198,7 +198,11 @@ int main() {
           *current_dir = 0;
           elev_set_motor_direction(*current_dir);
           reset_floor(matrix, *current_floor);
-          *current_dir = set_destination(matrix, *current_floor);
+          start_timer();
+          while(!check_timer(3) && matrix[*current_floor][2] == -1){
+            get_orders(matrix);
+            *current_dir = set_destination(matrix, *current_floor);
+          }
           printf("----------EDITED----------------\n");
           print_matrix(matrix);
         }
