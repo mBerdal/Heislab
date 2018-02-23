@@ -170,6 +170,11 @@ int main() {
           *current_dir = 0;
           matrix[*current_floor][2] = -1;
           erase_order(matrix, *current_floor);
+          start_timer();
+          while(check_timer(3)){
+            get_orders(matrix);
+            set_destination(matrix, *current_floor);
+          }
           printf("----------EDITED----------------\n");
           print_matrix(matrix);
           //WAIT A BIT AND TAKE NEW ORDERS/DESTINATIONS
