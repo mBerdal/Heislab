@@ -136,7 +136,6 @@ int set_destination(int matrix[N_FLOORS][3], int current_floor){
   if(matrix[current_floor][2] == -1){
     return(0);
   }
-  printf("New destination from floor %d to floor %d", current_floor, matrix[current_floor][2]);
   return(get_sign(matrix[current_floor][2] - current_floor));
 }
 
@@ -186,7 +185,7 @@ int main() {
           matrix[*current_floor][2] = -1;
           erase_order(matrix, *current_floor);
           start_timer();
-          while(!check_timer(3)){
+          while(!check_timer(3) && matrix[*current_floor][2] == -1){
             get_orders(matrix);
             set_destination(matrix, *current_floor);
           }
@@ -211,7 +210,7 @@ int main() {
           printf("----------reseting floor %d----------------\n", *current_floor);
           print_matrix(matrix);
           start_timer();
-          while(!check_timer(3)){
+          while(!check_timer(3) && matrix[*current_floor][2] == -1){
             get_orders(matrix);
             set_destination(matrix, *current_floor);
           }
