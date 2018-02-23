@@ -13,12 +13,18 @@
 time_t start_value;
 time_t end_value;
 
-// Starts the timer
-void start_timer();
+void start_timer(){
+	time(&start_value); // time() returns seconds since a pre-defined happening
+}
 
-// Checks if time seconds have past
-// @return 1 if time seconds have past, return 0 otherwise
-int check_timer(double seconds);
+int check_timer(double seconds){
+	time(&end_value);
+	if (difftime(end_value, start_value) >= seconds){
+		return 1;
+	
+	}
+	return 0;
+}
 
 typedef int bool;
 #define true 1
