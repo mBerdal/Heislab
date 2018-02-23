@@ -1,5 +1,5 @@
 
-#include "/home/magnusb96/Heislab/timer.h"
+#include "timer.h"
 #include "elev.h"
 #include <stdio.h>
 
