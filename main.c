@@ -205,7 +205,7 @@ int main() {
         if(at_destination){
           printf("-----------DESTINATION---------\n");
           print_matrix(matrix);
-          int* temp_dir = current_dir;
+          int temp_dir = *current_dir;
           *current_dir = 0;
           elev_set_motor_direction(*current_dir);
           matrix[*current_floor][2] = -1;
