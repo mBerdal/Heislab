@@ -178,9 +178,10 @@ int main() {
           print_matrix(matrix);
           elev_set_motor_direction(0);
           reset_floor(matrix, *current_floor);
-          printf("----------reset floor %d----------------\n", *current_floor);
+          printf("----------reseting floor %d----------------\n", *current_floor);
+          print_matrix(matrix);
           set_destination(matrix, *current_floor);
-          printf("----------done reseting floor %d----------------\n", *current_floor);
+          printf("----------new order at floor %d----------------\n", *current_floor);
           print_matrix(matrix);
         }
         elev_set_motor_direction(*current_dir);
