@@ -182,6 +182,7 @@ int main() {
     while (1) {
       *current_floor = elev_get_floor_sensor_signal();
       get_job(matrix, current_dir, current_floor);
+      printf("HER");
       if (*current_dir!=0 && *current_floor != -1){
         bool at_destination = is_at_destiantion(matrix, *current_floor);
         bool at_intermediate = is_at_intermediate(matrix, *current_floor, *current_dir);
