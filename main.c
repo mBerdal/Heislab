@@ -145,7 +145,7 @@ int set_destination(int matrix[N_FLOORS][3], int current_floor){
 }
 
 void go_to_dest(int temp_dir, int* current_dir, int current_floor, int matrix[N_FLOORS][3]){
-  printf("---------CHECKING IMMEDIATE, tempdir = &d---\n", temp_dir);
+  printf("---------CHECKING IMMEDIATE, tempdir = %d---\n", temp_dir);
   if(temp_dir == -1){
     for(int i = current_floor; i > 0; i--){
       if(matrix[i][2] < current_floor && matrix[i][2] != -1){
