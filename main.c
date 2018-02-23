@@ -181,6 +181,7 @@ int main() {
           printf("-----------DESTINATION---------\n");
           print_matrix(matrix);
           *current_dir = 0;
+          elev_set_motor_direction(*current_dir);
           matrix[*current_floor][2] = -1;
           erase_order(matrix, *current_floor);
           start_timer();
@@ -188,7 +189,7 @@ int main() {
             get_orders(matrix);
             set_destination(matrix, *current_floor);
           }
-          printf("----------EDITED----------------\n");
+          printf("----------TIMER DONE, EDITED----------------\n");
           print_matrix(matrix);
           //WAIT A BIT AND TAKE NEW ORDERS/DESTINATIONS
         }
