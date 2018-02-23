@@ -64,6 +64,7 @@ void go_to_order(int matrix[N_FLOORS][3], int* current_dir, int* current_floor){
     }
   elev_set_motor_direction(*current_dir);
   }
+  return(min_distance);
 }
 
 bool is_at_order(int matrix[N_FLOORS][3], int current_floor){
@@ -114,9 +115,14 @@ void reset_floor(int matrix[N_FLOORS][3], int current_floor){
   matrix[current_floor][0] = 0, matrix[current_floor][1] = 0, matrix[current_floor][2] = -1;
 }
 
-int set_destination(int matrix[N_FLOORS][3], int current_floor){
-  while(matrix[current_floor][2] == -1){
+int set_destination(int matrix[N_FLOORS][3], int current_floor, int MAX_TIME){
+  i = 0;
+  while(matrix[current_floor][2] == -1 && i < MAX_TIME){
     matrix[current_floor][2] = check_ordered_destination();
+    i++
+  }
+  if(i == MAX_TIME){
+    return(MAX_TIME);
   }
   return(get_sign(matrix[current_floor][2] - current_floor));
 }
@@ -148,8 +154,17 @@ int main() {
       *current_floor = elev_get_floor_sensor_signal();
       get_orders(matrix); 
       if(*current_dir == 0){
-          go_to_order(matrix, current_dir, current_floor);
+        go_to_order(matrix, current_dir, current_floor);
+        if(*current_dir == 0){
+          dir = set_destination();
+          printf("--------------NO ORDERS MADE-----------\n");
+          if(dir == MAX_TIME){
+            continue;
+            printf(".......NEXT ITERATION.........");
+          }
+          *current_dir = dir;
         }
+      }
       if (*current_dir!=0 && *current_floor != -1){
         bool at_destination = is_at_destiantion(matrix, *current_floor);
         bool at_intermediate = is_at_intermediate(matrix, *current_floor, *current_dir);
@@ -163,7 +178,7 @@ int main() {
           printf("----------EDITED----------------\n");
           print_matrix(matrix);
         }
-        if(at_order){
+        if(at_order){r
           printf("-----------ORDER---------\n");
           print_matrix(matrix);
           *current_dir = 0;
