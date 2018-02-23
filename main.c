@@ -48,6 +48,9 @@ void get_orders(int matrix[N_FLOORS][3]){
 }
 
 int get_sign(int val){
+  if(val == 0){
+    return(val);
+  }
   return(val/abs(val));
 }
 
@@ -114,7 +117,93 @@ void reset_floor(int matrix[N_FLOORS][3], int current_floor){
   matrix[current_floor][0] = 0, matrix[current_floor][1] = 0, matrix[current_floor][2] = -1;
 }
 
-int check_destination(int matrix[N_FLOORS][3], int current_floor, int MAX_TIME){
+int set_destination(int matrix[N_FLOORS][3], int current_floor){
+  while(matrix[current_floor][2] == -1){
+    matrix[current_floor][2] = check_ordered_destination();
+  }
+  return(get_sign(matrix[current_floor][2] - current_floor));
+}
+
+int main() {
+    // Initialize hardware
+    int matrix[N_FLOORS][3] = {{0,0,-1},
+                        {0,0,-1},
+                        {0,0,-1},
+                        {0,0,-1}};
+    
+    int current_floor_val = 69;
+    int* current_floor = &current_floor_val;
+    int current_dir_val = 1;
+    int* current_dir = &current_dir_val;
+
+    if (!elev_init()) {
+        printf("Unable to initialize elevator hardware!\n");
+        return 1;
+    }
+
+    printf("Press STOP button to stop elevator and exit program.\n");
+
+    elev_set_motor_direction(DIRN_UP);
+    *current_dir = 1;
+    *current_floor = start(current_dir);
+
+    while (1) {
+      *current_floor = elev_get_floor_sensor_signal();
+      get_orders(matrix); 
+      if(*current_dir == 0){
+          go_to_order(matrix, current_dir, current_floor);
+          if(*current_dir == 0){
+            *current_dir = set_destination(matrix, *current_floor);
+          }
+        }
+      if (*current_dir!=0 && *current_floor != -1){
+        bool at_destination = is_at_destiantion(matrix, *current_floor);
+        bool at_intermediate = is_at_intermediate(matrix, *current_floor, *current_dir);
+        bool at_order = is_at_order(matrix, *current_floor);
+        if(at_destination){
+          printf("-----------DESTINATION---------\n");
+          print_matrix(matrix);
+          *current_dir = 0;
+          matrix[*current_floor][2] = -1;
+          erase_order(matrix, *current_floor);
+          printf("----------EDITED----------------\n");
+          print_matrix(matrix);
+          //WAIT A BIT AND TAKE NEW ORDERS/DESTINATIONS
+        }
+        if(at_order){
+          printf("-----------ORDER---------\n");
+          print_matrix(matrix);
+          *current_dir = 0;
+          elev_set_motor_direction(*current_dir);
+          reset_floor(matrix, *current_floor);
+          *current_dir = set_destination(matrix, *current_floor);
+          printf("----------EDITED----------------\n");
+          print_matrix(matrix);
+        }
+        else if(at_intermediate){
+          printf("-----------INTERMEDIATE---------\n");
+          print_matrix(matrix);
+          elev_set_motor_direction(0);
+          reset_floor(matrix, *current_floor);
+          printf("----------reseting floor %d----------------\n", *current_floor);
+          print_matrix(matrix);
+          set_destination(matrix, *current_floor);
+          //WAIT A BIT AND TAKE NEW ORDERS/DESTINATIONS
+          printf("----------new order at floor %d----------------\n", *current_floor);
+          print_matrix(matrix);
+        }
+        elev_set_motor_direction(*current_dir);
+      }
+      if (elev_get_stop_signal()) {
+            elev_set_motor_direction(DIRN_STOP);
+            break;
+        }
+      }
+    return 0;
+}
+
+
+/*int check_destination(int matrix[N_FLOORS][3], int current_floor, int MAX_TIME){
   int i = 0;
   while(matrix[current_floor][2] == -1 && i < MAX_TIME){
     matrix[current_floor][2] = check_ordered_destination();
@@ -134,81 +223,4 @@ void set_destination(int matrix[N_FLOORS][3], int current_floor, int MAX_TIME, i
   else{
     *current_dir = dir;
   }
-}
-
-int main() {
-    // Initialize hardware
-    int matrix[N_FLOORS][3] = {{0,0,-1},
-                        {0,0,-1},
-                        {0,0,-1},
-                        {0,0,-1}};
-    
-    int current_floor_val = 69;
-    int* current_floor = &current_floor_val;
-    int current_dir_val = 1;
-    int* current_dir = &current_dir_val;
-    int MAX_TIME = 1000000;
-
-    if (!elev_init()) {
-        printf("Unable to initialize elevator hardware!\n");
-        return 1;
-    }
-
-    printf("Press STOP button to stop elevator and exit program.\n");
-
-    elev_set_motor_direction(DIRN_UP);
-    *current_dir = 1;
-    *current_floor = start(current_dir);
-
-    while (1) {
-      *current_floor = elev_get_floor_sensor_signal();
-      get_orders(matrix); 
-      if(*current_dir == 0){
-          go_to_order(matrix, current_dir, current_floor);
-          if(*current_dir == 0){
-            set_destination(matrix, *current_floor, MAX_TIME, current_dir);
-          }
-        }
-      if (*current_dir!=0 && *current_floor != -1){
-        bool at_destination = is_at_destiantion(matrix, *current_floor);
-        bool at_intermediate = is_at_intermediate(matrix, *current_floor, *current_dir);
-        bool at_order = is_at_order(matrix, *current_floor);
-        if(at_destination){
-          printf("-----------DESTINATION---------\n");
-          print_matrix(matrix);
-          *current_dir = 0;
-          matrix[*current_floor][2] = -1;
-          erase_order(matrix, *current_floor);
-          printf("----------EDITED----------------\n");
-          print_matrix(matrix);
-        }
-        if(at_order){
-          printf("-----------ORDER---------\n");
-          print_matrix(matrix);
-          *current_dir = 0;
-          elev_set_motor_direction(*current_dir);
-          reset_floor(matrix, *current_floor);
-          set_destination(matrix, *current_floor, MAX_TIME, current_dir);
-          printf("----------EDITED----------------\n");
-          print_matrix(matrix);
-        }
-        else if(at_intermediate){
-          printf("-----------INTERMEDIATE---------\n");
-          print_matrix(matrix);
-          elev_set_motor_direction(0);
-          reset_floor(matrix, *current_floor);
-          printf("----------reseting floor %d----------------\n", *current_floor);
-          print_matrix(matrix);
-          set_destination(matrix, *current_floor, MAX_TIME, current_dir);
-          printf("----------new order at floor %d----------------\n", *current_floor);
-          print_matrix(matrix);
-        }
-        elev_set_motor_direction(*current_dir);
-      }
-      if (elev_get_stop_signal()) {
-            elev_set_motor_direction(DIRN_STOP);
-            break;
-        }
-      }
-    return 0;
-}
+}*/
