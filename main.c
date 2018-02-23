@@ -115,14 +115,24 @@ void reset_floor(int matrix[N_FLOORS][3], int current_floor){
   matrix[current_floor][0] = 0, matrix[current_floor][1] = 0, matrix[current_floor][2] = -1;
 }
 
-int set_destination(int matrix[N_FLOORS][3], int current_floor, int MAX_TIME){
+void set_destination(int matrix[N_FLOORS][3], int current_floor, int MAX_TIME, int* current_dir){
+  int dir = set_destination(matrix, current_floor, Max_TIME);
+  if(dest == MAX_TIME){
+    *current_dir = 0;
+  }
+  else{
+    *current_dir = dest;
+  }
+}
+
+int check_destination(int matrix[N_FLOORS][3], int current_floor, int MAX_TIME){
   i = 0;
   while(matrix[current_floor][2] == -1 && i < MAX_TIME){
     matrix[current_floor][2] = check_ordered_destination();
     i++
   }
   if(i == MAX_TIME){
-    return(MAX_TIME);
+    return(i);
   }
   return(get_sign(matrix[current_floor][2] - current_floor));
 }
@@ -154,17 +164,11 @@ int main() {
       *current_floor = elev_get_floor_sensor_signal();
       get_orders(matrix); 
       if(*current_dir == 0){
-        go_to_order(matrix, current_dir, current_floor);
-        if(*current_dir == 0){
-          dir = set_destination();
-          printf("--------------NO ORDERS MADE-----------\n");
-          if(dir == MAX_TIME){
-            continue;
-            printf(".......NEXT ITERATION.........");
+          go_to_order(matrix, current_dir, current_floor);
+          if(*current_dir == 0){
+            set_destination(matrix, *current_floor, MAX_TIME);
           }
-          *current_dir = dir;
         }
-      }
       if (*current_dir!=0 && *current_floor != -1){
         bool at_destination = is_at_destiantion(matrix, *current_floor);
         bool at_intermediate = is_at_intermediate(matrix, *current_floor, *current_dir);
@@ -184,7 +188,7 @@ int main() {
           *current_dir = 0;
           elev_set_motor_direction(*current_dir);
           reset_floor(matrix, *current_floor);
-          *current_dir = set_destination(matrix, *current_floor);
+          set_destination(matrix, *current_floor, MAX_TIME, current_dir);
           printf("----------EDITED----------------\n");
           print_matrix(matrix);
         }
@@ -195,7 +199,7 @@ int main() {
           reset_floor(matrix, *current_floor);
           printf("----------reseting floor %d----------------\n", *current_floor);
           print_matrix(matrix);
-          set_destination(matrix, *current_floor);
+          set_destination(matrix, *current_floor, MAX_TIME, current_dir);
           printf("----------new order at floor %d----------------\n", *current_floor);
           print_matrix(matrix);
         }
