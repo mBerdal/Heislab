@@ -16,9 +16,9 @@ void print_matrix(int matrix[N_FLOORS][3]){
   }
 }
 
-int get_index(int* current_dir){
+int get_index(int current_dir){
   int index = 1;
-  if(*current_dir == 1){
+  if(current_dir == 1){
     index = 0;
   }
   return(index);
