@@ -1,4 +1,5 @@
 #include "elev.h"
+#include "timer.h"
 #include <stdio.h>
 #include "math.h"
 #include <stdlib.h>
@@ -118,10 +119,25 @@ void reset_floor(int matrix[N_FLOORS][3], int current_floor){
 }
 
 int set_destination(int matrix[N_FLOORS][3], int current_floor){
+  start_timer();
   while(matrix[current_floor][2] == -1){
+    if(check_timer(3)){
+      return(0);
+    }
     matrix[current_floor][2] = check_ordered_destination();
   }
   return(get_sign(matrix[current_floor][2] - current_floor));
+}
+
+void get_job(int matrix[N_FLOORS][3], int* current_dir, int* current_floor){
+  get_orders(matrix); 
+  if(*current_dir == 0){
+    go_to_order(matrix, current_dir, current_floor); //Check for orders for elevator to get to floor
+    if(*current_dir == 0){
+      print_matrix(matrix);
+      *current_dir = set_destination(matrix, *current_floor); //Check for orders for elevator to go to floor
+    }
+  }
 }
 
 int main() {
@@ -149,14 +165,7 @@ int main() {
 
     while (1) {
       *current_floor = elev_get_floor_sensor_signal();
-      get_orders(matrix); 
-      if(*current_dir == 0){
-          go_to_order(matrix, current_dir, current_floor);
-          if(*current_dir == 0){
-            print_matrix(matrix);
-            *current_dir = set_destination(matrix, *current_floor);
-          }
-        }
+      get_job(matrix, current_dir, current_floor);
       if (*current_dir!=0 && *current_floor != -1){
         bool at_destination = is_at_destiantion(matrix, *current_floor);
         bool at_intermediate = is_at_intermediate(matrix, *current_floor, *current_dir);
@@ -165,11 +174,9 @@ int main() {
           printf("-----------DESTINATION---------\n");
           print_matrix(matrix);
           *current_dir = 0;
-          matrix[*current_floor][2] = -1;
           erase_order(matrix, *current_floor);
           printf("----------EDITED----------------\n");
           print_matrix(matrix);
-          //WAIT A BIT AND TAKE NEW ORDERS/DESTINATIONS
         }
         if(at_order){
           printf("-----------ORDER---------\n");
