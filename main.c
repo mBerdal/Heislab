@@ -173,12 +173,14 @@ int main() {
           printf("----------EDITED----------------");
           print_matrix(matrix);
         }
-        /*else if(at_intermediate){
+        else if(at_intermediate){
+          printf("-----------INTERMEDIATE---------");
+          print_matrix(matrix);
           elev_set_motor_direction(0);
-          while(set_destination(matrix, *current_floor) == 0){
-            set_destination(matrix, *current_floor);
-          }
-        }*/
+          set_destination(matrix, *current_floor);
+          printf("----------EDITED----------------");
+          print_matrix(matrix);
+        }
         elev_set_motor_direction(*current_dir);
       }
       if (elev_get_stop_signal()) {
