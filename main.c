@@ -177,6 +177,7 @@ int main() {
           printf("-----------INTERMEDIATE---------");
           print_matrix(matrix);
           elev_set_motor_direction(0);
+          reset_floor(matrix, *current_floor);
           set_destination(matrix, *current_floor);
           printf("----------EDITED----------------");
           print_matrix(matrix);
