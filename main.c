@@ -84,7 +84,7 @@ int check_ordered_destination(){
   return(-1);
 }
 
-int set_destination(int current_floor, bool at_order){
+int set_destination(int matrix[4][3], int current_floor){
   matrix[current_floor][2] = check_ordered_destination();
   return(get_sign(matrix[current_floor][2] - current_floor));
 }
@@ -123,12 +123,12 @@ int main() {
         bool at_intermediate = is_at_intermediate(matrix, current_floor, current_dir);
         if(at_destination){
           *current_dir = 0;
-          matrix[current_floor][2] = -1;
+          matrix[*current_floor][2] = -1;
         }
         else if(at_intermediate){
           elev_set_motor_direction(0);
-          while(set_destination(*current_floor) == 0){
-            set_destination(*current_floor);
+          while(set_destination(matrix, *current_floor) == 0){
+            set_destination(matrix, *current_floor);
           }
         }
         elev_set_motor_direction(*current_dir);
@@ -138,8 +138,7 @@ int main() {
             break;
         }
       }
-        return 0;
-    }
+    return 0;
 }
 
         //bool at_order = is_at_order(matrix, current_floor);
