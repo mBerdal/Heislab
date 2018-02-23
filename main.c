@@ -126,7 +126,7 @@ void set_destination(int matrix[N_FLOORS][3], int current_floor, int MAX_TIME, i
 }
 
 int check_destination(int matrix[N_FLOORS][3], int current_floor, int MAX_TIME){
-  i = 0;
+  int i = 0;
   while(matrix[current_floor][2] == -1 && i < MAX_TIME){
     matrix[current_floor][2] = check_ordered_destination();
     i++
@@ -148,6 +148,7 @@ int main() {
     int* current_floor = &current_floor_val;
     int current_dir_val = 1;
     int* current_dir = &current_dir_val;
+    int MAX_TIME = 10000;
 
     if (!elev_init()) {
         printf("Unable to initialize elevator hardware!\n");
@@ -182,7 +183,7 @@ int main() {
           printf("----------EDITED----------------\n");
           print_matrix(matrix);
         }
-        if(at_order){r
+        if(at_order){
           printf("-----------ORDER---------\n");
           print_matrix(matrix);
           *current_dir = 0;
