@@ -141,13 +141,7 @@ void reset_floor(int matrix[N_FLOORS][3], int current_floor){
 }
 
 int set_destination(int matrix[N_FLOORS][3], int current_floor){
-  start_timer();
-  while(matrix[current_floor][2] == -1){
-    if(check_timer(3)){
-      return(0);
-    }
-    matrix[current_floor][2] = check_ordered_destination();
-  }
+  matrix[current_floor][2] = check_ordered_destination();
   return(get_sign(matrix[current_floor][2] - current_floor));
 }
 
@@ -165,9 +159,9 @@ void get_job(int matrix[N_FLOORS][3], int* current_dir, int* current_floor){
 int main() {
     // Initialize hardware
     int matrix[N_FLOORS][3] = {{0,0,-1},
-                        {0,0,-1},
-                        {0,0,-1},
-                        {0,0,-1}};
+                              {0,0,-1},
+                              {0,0,-1},
+                              {0,0,-1}};
     
     int current_floor_val = 69;
     int* current_floor = &current_floor_val;
@@ -199,6 +193,11 @@ int main() {
           erase_order(matrix, *current_floor);
           printf("----------EDITED----------------\n");
           print_matrix(matrix);
+          start_timer();
+          while(!check_timer(3)){
+            set_destination(matrix, *current_floor);
+            get_orders(matrix);
+          }
         }
         if(at_order){
           printf("-----------ORDER---------\n");
@@ -206,7 +205,11 @@ int main() {
           *current_dir = 0;
           elev_set_motor_direction(*current_dir);
           reset_floor(matrix, *current_floor);
-          *current_dir = set_destination(matrix, *current_floor);
+           start_timer();
+          while(!check_timer(3)){
+            *current_dir = set_destination(matrix, *current_floor);
+            get_orders(matrix);
+          }
           printf("----------EDITED----------------\n");
           print_matrix(matrix);
         }
@@ -217,7 +220,11 @@ int main() {
           reset_floor(matrix, *current_floor);
           printf("----------reseting floor %d----------------\n", *current_floor);
           print_matrix(matrix);
-          set_destination(matrix, *current_floor);
+          start_timer();
+          while(!check_timer(3)){
+            set_destination(matrix, *current_floor);
+            get_orders(matrix);
+          }
           //WAIT A BIT AND TAKE NEW ORDERS/DESTINATIONS
           printf("----------new order at floor %d----------------\n", *current_floor);
           print_matrix(matrix);
