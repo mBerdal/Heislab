@@ -8,6 +8,19 @@ typedef int bool;
 #define true 1
 #define false 0
 
+void start_timer(){
+	time(&start_value); // time() returns seconds since a pre-defined happening
+}
+
+int check_timer(double seconds){
+	time(&end_value);
+	if (difftime(end_value, start_value) >= seconds){
+		return 1;
+	
+	}
+	return 0;
+}
+
 void print_matrix(int matrix[N_FLOORS][3]){
   for(int i = 0; i < N_FLOORS; i++){
     for(int j = 0; j < 3; j++){
