@@ -180,7 +180,7 @@ int main() {
           reset_floor(matrix, *current_floor);
           printf("----------reset floor %d----------------\n", *current_floor);
           set_destination(matrix, *current_floor);
-          printf("----------done reseting----------------\n", *current_floor);
+          printf("----------done reseting floor %d----------------\n", *current_floor);
           print_matrix(matrix);
         }
         elev_set_motor_direction(*current_dir);
