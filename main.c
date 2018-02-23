@@ -151,6 +151,7 @@ int set_destination(int matrix[N_FLOORS][3], int current_floor){
 void get_job(int matrix[N_FLOORS][3], int* current_dir, int* current_floor){
   get_orders(matrix); 
   if(*current_dir == 0){
+    print("HERE");
     go_to_order(matrix, current_dir, current_floor); //Check for orders for elevator to get to floor
     if(*current_dir == 0){
       *current_dir = set_destination(matrix, *current_floor); //Check for orders for elevator to go to floor
