@@ -116,12 +116,12 @@ void reset_floor(int matrix[N_FLOORS][3], int current_floor){
 }
 
 void set_destination(int matrix[N_FLOORS][3], int current_floor, int MAX_TIME, int* current_dir){
-  int dir = set_destination(matrix, current_floor, Max_TIME);
-  if(dest == MAX_TIME){
+  int dir = set_destination(matrix, current_floor, MAX_TIME);
+  if(dir == MAX_TIME){
     *current_dir = 0;
   }
   else{
-    *current_dir = dest;
+    *current_dir = dir;
   }
 }
 
@@ -129,7 +129,7 @@ int check_destination(int matrix[N_FLOORS][3], int current_floor, int MAX_TIME){
   int i = 0;
   while(matrix[current_floor][2] == -1 && i < MAX_TIME){
     matrix[current_floor][2] = check_ordered_destination();
-    i++
+    i++;
   }
   if(i == MAX_TIME){
     return(i);
@@ -167,7 +167,7 @@ int main() {
       if(*current_dir == 0){
           go_to_order(matrix, current_dir, current_floor);
           if(*current_dir == 0){
-            set_destination(matrix, *current_floor, MAX_TIME);
+            set_destination(matrix, *current_floor, MAX_TIME, current_dir);
           }
         }
       if (*current_dir!=0 && *current_floor != -1){
