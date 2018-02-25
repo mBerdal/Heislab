@@ -24,9 +24,13 @@ void get_orders(int matrix[N_FLOORS][3]){
     }
 }
 
+void get_destination(int matrix[N_FLOORS][3], int current_floor){
+    matrix[current_floor][2] = check_ordered_destination();
+}
+
 int check_ordered_destination(){
     for(int i = 0; i < N_FLOORS; i++){
-        if(elev_get_button_signal(2, i)){
+        if(elev_get_button_signal(BUTTON_COMMAND, i)){
         return(i);
         }
     }
@@ -54,10 +58,6 @@ void initialize_orders(int matrix[N_FLOORS][3]){
 
 void reset_floor(int matrix[N_FLOORS][3], int current_floor){
   matrix[current_floor][0] = 0, matrix[current_floor][1] = 0, matrix[current_floor][2] = -1;
-}
-
-void get_destination(int matrix[N_FLOORS][3], int current_floor){
-    matrix[current_floor][2] = check_ordered_destination();
 }
 
 int choose_direction(int matrix[N_FLOORS][3], int current_floor){
