@@ -2,6 +2,7 @@
 #include "order_system.h"
 #include "elev.h"
 #include "elev_state_machine.h"
+#include <stdio.h>
 
 
 struct Elev state_machine(struct Elev elevator){
