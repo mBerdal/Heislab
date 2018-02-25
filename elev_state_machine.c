@@ -106,6 +106,7 @@ struct Elev state_machine(struct Elev elevator){
         default:
             break;
     }
+    printf("%d\n", elevator.stopped_at_intermediate);
     elev_set_motor_direction(elevator.current_dir);
     return(elevator);
 }
