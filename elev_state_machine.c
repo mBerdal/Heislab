@@ -28,10 +28,11 @@ struct Elev state_machine(struct Elev elevator){
         case EXCECUTE:
                 printf("Excecuting");       
                 elevator.current_dir = choose_direction(elevator.orders, elevator.current_floor);
-                if(elevator.current_dir != 0){
+                if(elevator.current_dir != DIRN_STOP){
                     elevator.status = IN_TRANSIT;
                 }
                 else{
+                    printf("Going to IDLE");
                     elevator.status = IDLE;
                 }
                 break;
