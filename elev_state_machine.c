@@ -32,6 +32,9 @@ struct Elev state_machine(struct Elev elevator){
                 elevator.current_dir = choose_direction(elevator.orders, elevator.current_floor);
                 if(elevator.current_dir != DIRN_STOP){
                     elevator.status = IN_TRANSIT;
+                    printf("Orders at excecute\n");
+                    print_matrix(elevator.orders);
+                    printf("\n");
                 }
                 else{
                     elevator.status = IDLE;

@@ -3,8 +3,6 @@
 #include <stdio.h>
 
 bool is_at_order(int matrix[N_FLOORS][3], int current_floor){
-  printf("Orders checked\n");
-  print_matrix(matrix);
   return(matrix[current_floor][0] == 1 || matrix[current_floor][1] == 1);
 }
 
