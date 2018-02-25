@@ -74,6 +74,8 @@ struct Elev state_machine(struct Elev elevator){
                 get_orders(elevator.orders);
                 get_destination(elevator.orders, elevator.current_floor);
             }
+            print_matrix(elevator.orders);
+            printf("\n");
             if(!elevator.stopped_at_intermediate){
                  elevator.current_dir = set_direction(elevator.current_floor, elevator.orders[elevator.current_floor][2]);
             }
@@ -103,8 +105,6 @@ struct Elev state_machine(struct Elev elevator){
         default:
             break;
     }
-    print_matrix(elevator.orders);
-    printf("\n");
     elev_set_motor_direction(elevator.current_dir);
     return(elevator);
 }
