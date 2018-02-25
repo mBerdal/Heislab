@@ -15,7 +15,7 @@ struct Elev state_machine(struct Elev elevator){
             elevator.current_floor = start();                             
             elevator.current_dir = DIRN_STOP;
             elevator.status = IDLE;
-            printf("Initialization finished");
+            printf("Initialization finished\n");
             print_matrix(elevator.orders);
             break;
         
@@ -26,8 +26,9 @@ struct Elev state_machine(struct Elev elevator){
             break;
         
         case EXCECUTE:
-                printf("Excecuting");       
+                printf("Excecuting\n");       
                 elevator.current_dir = choose_direction(elevator.orders, elevator.current_floor);
+                printf("%d\n", elevator.current_dir);
                 if(elevator.current_dir != DIRN_STOP){
                     elevator.status = IN_TRANSIT;
                 }
@@ -38,7 +39,7 @@ struct Elev state_machine(struct Elev elevator){
                 break;
         
         case IN_TRANSIT:
-            printf("In transit");
+            printf("In transit\n");
             get_orders(elevator.orders);
             elevator.current_floor = elev_get_floor_sensor_signal();
             if(elevator.current_floor != -1){
