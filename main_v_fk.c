@@ -3,16 +3,6 @@
 #include "utilities.h"
 #include <stdio.h>
 
-int start(){
-  while(1){
-    if(elev_get_floor_sensor_signal() != -1){  //Run until elevator reaches a floor
-      elev_set_motor_direction(DIRN_STOP);     //Stop elevator when it hits a floor
-      return(elev_get_floor_sensor_signal());  //Return which floor elevator stopped at
-    }
-  }
-}
-
-
 int main() {
     // Initialize hardware
     if (!elev_init()) {

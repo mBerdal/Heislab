@@ -7,7 +7,7 @@ bool is_at_order(int matrix[N_FLOORS][3], int current_floor){
 
 bool is_at_destiantion(int matrix[N_FLOORS][3], int current_floor){
   for(int i = 0; i < N_FLOORS; i++){
-    if(matrix[i][2] = current_floor){
+    if(matrix[i][2] == current_floor){
       return(true);
     }
   }
