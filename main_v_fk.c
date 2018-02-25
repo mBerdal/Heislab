@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 int main() {
+    printf("Running main_v_fk");
     // Initialize hardware
     if (!elev_init()) {
         printf("Unable to initialize elevator hardware!\n");
