@@ -52,16 +52,21 @@ struct Elev state_machine(struct Elev elevator){
                 elevator.status = AT_ORDER;
                 printf("Stopped at intermediate at floor");
                 print_matrix(elevator.orders);
+                printf("\n");
                 break;
             }
             if(is_at_order(elevator.orders, elevator.current_floor)){
                 elevator.status = AT_ORDER;
                 printf("Stopped at order\n");
+                print_matrix(elevator.orders);
+                printf("\n");
                 break;
             }
             if(is_at_destiantion(elevator.orders, elevator.current_floor)){
                 elevator.status = AT_DESTINATION;
                 printf("Stopped at destination\n");
+                print_matrix(elevator.orders);
+                printf("\n");
                 break;
             }
             elevator.status = IN_TRANSIT;
