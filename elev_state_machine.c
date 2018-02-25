@@ -21,7 +21,6 @@ struct Elev state_machine(struct Elev elevator){
         
         case IDLE:
             get_orders(elevator.orders);
-            print_matrix(elevator.orders);
             get_destination(elevator.orders, elevator.current_floor);
             elevator.status = EXCECUTE;
             break;
@@ -37,7 +36,7 @@ struct Elev state_machine(struct Elev elevator){
                 break;
         
         case IN_TRANSIT:
-            //get_orders(elevator.orders);
+            get_orders(elevator.orders);
             elevator.current_floor = elev_get_floor_sensor_signal();
             if(elevator.current_floor != -1){
                 elevator.status = RUN_TESTS;
@@ -48,21 +47,24 @@ struct Elev state_machine(struct Elev elevator){
             break;
         
         case RUN_TESTS:
-             /*if(is_at_intermediate(elevator.orders, elevator.current_floor, elevator.current_dir)){
+             if(is_at_intermediate(elevator.orders, elevator.current_floor, elevator.current_dir)){
                 elevator.stopped_at_intermediate = true;
                 elevator.status = AT_ORDER;
-                printf("Stopped at intermediate at floor\n");
+                printf("Stopped at intermediate at floor%d\n", elevator.current_floor);
                 print_matrix(elevator.orders);
                 printf("\n");
                 break;
-            }*/
+            }
             if(is_at_order(elevator.orders, elevator.current_floor)){
                 elevator.status = AT_ORDER;
+                printf("Stopped at order at floor %d\n", elevator.current_floor);
+                print_matrix(elevator.orders);
+                printf("\n");
                 break;
             }
             if(is_at_destiantion(elevator.orders, elevator.current_floor)){
                 elevator.status = AT_DESTINATION;
-                printf("Stopped at destination\n");
+                printf("Stopped at destination at floor%d\n", elevator.current_floor);
                 print_matrix(elevator.orders);
                 printf("\n");
                 break;
