@@ -73,7 +73,6 @@ struct Elev state_machine(struct Elev elevator){
             break;
         
         case AT_ORDER:
-            printf("here");
             reset_floor(elevator.orders, elevator.current_floor);
             elev_set_motor_direction(DIRN_STOP);
             start_timer();
