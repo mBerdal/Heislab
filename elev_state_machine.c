@@ -27,6 +27,8 @@ struct Elev state_machine(struct Elev elevator){
         
         case EXCECUTE:   
                 elevator.current_dir = choose_direction(elevator.orders, elevator.current_floor);
+                print_matrix(elevator.orders);
+                printf("\n");
                 if(elevator.current_dir != DIRN_STOP){
                     elevator.status = IN_TRANSIT;
                 }
@@ -106,7 +108,6 @@ struct Elev state_machine(struct Elev elevator){
         default:
             break;
     }
-    printf("%d\n", elevator.stopped_at_intermediate);
     elev_set_motor_direction(elevator.current_dir);
     return(elevator);
 }
