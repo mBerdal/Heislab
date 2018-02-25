@@ -87,18 +87,19 @@ struct Elev state_machine(struct Elev elevator){
             break;
 
         case AT_DESTINATION:
-            erase_order(elevator.orders, elevator.current_floor);
+            erase_order(elevator.orders, elevator.current_floor);   //Erase all orders to curren floor
+            elevator.stopped_at_intermediate = check_orders(elevator.orders);   //If intermediate order was ordered to current floor do not keep going
             print_matrix(elevator.orders);
             elev_set_motor_direction(DIRN_STOP);
             start_timer();
             while(!check_timer(3)){
                 monitor_buttons(elevator.orders, elevator.current_floor);
             }
-            if(elevator.stopped_at_intermediate){
+            if(elevator.stopped_at_intermediate){   //If elevator stopped at immediate keep moving
                 elevator.stopped_at_intermediate = false;
                 elevator.status = IN_TRANSIT;
             }
-            else{
+            else{   //Stop elevator and excecute other orders
                 elevator.current_dir = DIRN_STOP;
                 elevator.status = EXCECUTE;
             }

@@ -31,3 +31,12 @@ bool is_at_intermediate(int matrix[N_FLOORS][3], int current_floor, int current_
     }
     return(false);
 }
+
+bool check_orders(int matrix[N_FLOORS][3]){
+  for(int i = 0; i < N_FLOORS; i++){
+    if(matrix[i][2] != -1){
+      return(false);
+    }
+  }
+  return(true);
+}
