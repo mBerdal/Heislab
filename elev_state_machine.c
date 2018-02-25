@@ -21,10 +21,8 @@ struct Elev state_machine(struct Elev elevator){
         
         case IDLE:
             get_orders(elevator.orders);
-            printf("IDLE\n");
             print_matrix(elevator.orders);
-            printf("\n");
-            //get_destination(elevator.orders, elevator.current_floor);
+            get_destination(elevator.orders, elevator.current_floor);
             elevator.status = EXCECUTE;
             break;
         
@@ -32,9 +30,6 @@ struct Elev state_machine(struct Elev elevator){
                 elevator.current_dir = choose_direction(elevator.orders, elevator.current_floor);
                 if(elevator.current_dir != DIRN_STOP){
                     elevator.status = IN_TRANSIT;
-                    printf("Orders at excecute\n");
-                    print_matrix(elevator.orders);
-                    printf("\n");
                 }
                 else{
                     elevator.status = IDLE;
@@ -62,11 +57,7 @@ struct Elev state_machine(struct Elev elevator){
                 break;
             }*/
             if(is_at_order(elevator.orders, elevator.current_floor)){
-                printf("Orders after check\n");
-                print_matrix(elevator.orders);
                 elevator.status = AT_ORDER;
-                printf("Stopped at order\n");
-                printf("\n");
                 break;
             }
             if(is_at_destiantion(elevator.orders, elevator.current_floor)){
