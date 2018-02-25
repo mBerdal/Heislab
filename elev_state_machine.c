@@ -98,6 +98,6 @@ struct Elev state_machine(struct Elev elevator){
             break;
 
     elev_set_motor_direction(elevator.current_dir);
-    return(elevator);
     }
+    return(elevator);
 }

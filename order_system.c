@@ -1,4 +1,7 @@
 #include "elev.h"
+#include "math.h"
+#include "utilities.h"
+
 
 int start(){
   while(1){
