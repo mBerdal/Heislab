@@ -68,6 +68,7 @@ int choose_direction(int matrix[N_FLOORS][3], int current_floor){
         if((matrix[i][0] != 0 || matrix[i][1] != 0) && abs(i - current_floor) < abs(min_distance) && abs(i - current_floor) != 0){
             min_distance = i - current_floor;
             dir = get_sign(min_distance);
+            printf("DIR = %d\n", dir);
         }
     }        
     if(dir == 0){   //If no orders has been made, look for destination
