@@ -21,6 +21,7 @@ struct Elev state_machine(struct Elev elevator){
         
         case IDLE:
             get_orders(elevator.orders);
+            print_matrix(elevator.orders);
             //get_destination(elevator.orders, elevator.current_floor);
             elevator.status = EXCECUTE;
             break;
