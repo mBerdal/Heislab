@@ -50,7 +50,8 @@ struct Elev state_machine(struct Elev elevator){
              if(is_at_intermediate(elevator.orders, elevator.current_floor, elevator.current_dir)){
                 elevator.stopped_at_intermediate = true;
                 elevator.status = AT_ORDER;
-                printf("Stopped at intermediate\n");
+                printf("Stopped at intermediate at floor");
+                print_matrix(elevator.orders);
                 break;
             }
             if(is_at_order(elevator.orders, elevator.current_floor)){
