@@ -60,7 +60,6 @@ struct Elev state_machine(struct Elev elevator){
             if(is_at_order(elevator.orders, elevator.current_floor)){
                 elevator.status = AT_ORDER;
                 printf("Stopped at order\n");
-                printf("_____________");
                 print_matrix(elevator.orders);
                 printf("\n");
                 break;
