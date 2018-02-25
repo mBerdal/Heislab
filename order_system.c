@@ -61,18 +61,14 @@ void reset_floor(int matrix[N_FLOORS][3], int current_floor){
 }
 
 int choose_direction(int matrix[N_FLOORS][3], int current_floor){
-    int min_distance = N_FLOORS;
-    int min_index = 0, dir = 0;
-    for(int i = 0; i < N_FLOORS; i++){
+    int min_distance = N_FLOORS, dir = 0;
+    for(int i = 0; i < N_FLOORS; i++){  //Look for orders at each floor
         if((matrix[i][0] != 0 || matrix[i][1] != 0) && abs(i - current_floor) < abs(min_distance) && abs(i - current_floor) != 0){
-            matrix[min_index][2] = -1;
             min_distance = i - current_floor;
-            matrix[current_floor + min_distance][2] = i;
-            min_index = i;
             dir = get_sign(min_distance);
         }
     }        
-    if(dir == 0){
+    if(dir == 0){   //If no orders has been made, look for destination
         dir = set_direction(current_floor, matrix[current_floor][2]);
     }
     return(dir);    
