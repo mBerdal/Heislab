@@ -102,6 +102,7 @@ struct Elev state_machine(struct Elev elevator){
                 elevator.status = IN_TRANSIT;
             }
             else{   //Stop elevator and excecute other orders
+                printf("Excecuting other orders\n");
                 elevator.current_dir = DIRN_STOP;
                 elevator.status = EXCECUTE;
             }
