@@ -1,5 +1,6 @@
 #include "elev.h"
 #include "utilities.h"
+#include <stdio.h>
 
 bool is_at_order(int matrix[N_FLOORS][3], int current_floor){
   printf("Orders checked\n");
