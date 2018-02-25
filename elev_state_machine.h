@@ -1,3 +1,4 @@
+#include "utilities.h"
 
 typedef enum {
     IDLE,                      //elevator awaits orders/destination
