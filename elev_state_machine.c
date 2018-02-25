@@ -88,6 +88,7 @@ struct Elev state_machine(struct Elev elevator){
 
         case AT_DESTINATION:
             erase_order(elevator.orders, elevator.current_floor);
+            print_matrix(elevator.orders);
             elev_set_motor_direction(DIRN_STOP);
             start_timer();
             while(!check_timer(3)){
