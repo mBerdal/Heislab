@@ -1,5 +1,6 @@
 #include "elev.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include "utilities.h"
 
 
