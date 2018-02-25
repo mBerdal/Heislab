@@ -103,8 +103,7 @@ struct Elev state_machine(struct Elev elevator){
             }
         default:
             break;
-
-    elev_set_motor_direction(elevator.current_dir);
     }
+    elev_set_motor_direction(elevator.current_dir);
     return(elevator);
 }
