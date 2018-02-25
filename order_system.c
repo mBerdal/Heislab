@@ -24,10 +24,6 @@ void get_orders(int matrix[N_FLOORS][3]){
     }
 }
 
-void get_destination(int matrix[N_FLOORS][3], int current_floor){
-    matrix[current_floor][2] = check_ordered_destination();
-}
-
 int check_ordered_destination(){
     for(int i = 0; i < N_FLOORS; i++){
         if(elev_get_button_signal(BUTTON_COMMAND, i)){
@@ -35,6 +31,10 @@ int check_ordered_destination(){
         }
     }
     return(-1);
+}
+
+void get_destination(int matrix[N_FLOORS][3], int current_floor){
+    matrix[current_floor][2] = check_ordered_destination();
 }
 
 void erase_order(int matrix[N_FLOORS][3], int current_floor){
