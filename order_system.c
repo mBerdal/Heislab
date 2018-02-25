@@ -27,7 +27,7 @@ void get_orders(int matrix[N_FLOORS][3]){
 int check_ordered_destination(){
     for(int i = 0; i < N_FLOORS; i++){
         if(elev_get_button_signal(BUTTON_COMMAND, i)){
-            print(i);
+            printf("%d\n", i);
             return(i);
         }
     }
