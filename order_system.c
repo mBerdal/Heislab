@@ -78,5 +78,7 @@ int choose_direction(int matrix[N_FLOORS][3], int current_floor){
 
 void monitor_buttons(int matrix[N_FLOORS][3], int current_floor){
     get_orders(matrix);
-    get_destination(matrix, current_floor);
+    if(matrix[current_floor][2] == -1){
+        get_destination(matrix, current_floor);
+    }
 }

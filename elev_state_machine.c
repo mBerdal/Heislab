@@ -20,7 +20,8 @@ struct Elev state_machine(struct Elev elevator){
             break;
         
         case IDLE:
-            monitor_buttons(elevator.orders, elevator.current_floor);
+            get_orders(elevator.orders);
+            get_destination(elevator.orders, elevator.current_floor);
             elevator.status = EXCECUTE;
             break;
         
