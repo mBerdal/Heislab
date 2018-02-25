@@ -3,6 +3,11 @@
 #include <stdio.h>
 
 bool is_at_order(int matrix[N_FLOORS][3], int current_floor){
+  for(int i = 0; i < N_FLOORS; i++){
+    if(matrix[i][2] != -1){
+      return(false);
+    }
+  }
   return(matrix[current_floor][0] == 1 || matrix[current_floor][1] == 1);
 }
 
