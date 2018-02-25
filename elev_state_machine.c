@@ -23,6 +23,8 @@ struct Elev state_machine(struct Elev elevator){
             get_orders(elevator.orders);
             get_destination(elevator.orders, elevator.current_floor);
             elevator.status = EXCECUTE;
+            print_matrix(elevator.orders);
+            printf("\n");
             break;
         
         case EXCECUTE:   
