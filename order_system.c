@@ -27,7 +27,8 @@ void get_orders(int matrix[N_FLOORS][3]){
 int check_ordered_destination(){
     for(int i = 0; i < N_FLOORS; i++){
         if(elev_get_button_signal(BUTTON_COMMAND, i)){
-        return(i);
+            print(i);
+            return(i);
         }
     }
     return(-1);
@@ -72,4 +73,9 @@ int choose_direction(int matrix[N_FLOORS][3], int current_floor){
         dir = set_direction(current_floor, matrix[current_floor][2]);
     }
     return(dir);    
+}
+
+void monitor_buttons(int matrix[N_FLOORS][3], int current_floor){
+    get_orders(matrix);
+    get_destination(matrix, current_floor);
 }

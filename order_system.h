@@ -8,3 +8,4 @@ void reset_floor(int matrix[N_FLOORS][3], int current_floor);
 void get_destination(int matrix[N_FLOORS][3], int current_floor);
 int choose_direction(int matrix[N_FLOORS][3], int current_floor);
 int start();
+void monitor_buttons(int matrix[N_FLOORS][3], int current_floor);

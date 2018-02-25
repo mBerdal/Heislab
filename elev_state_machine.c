@@ -20,8 +20,7 @@ struct Elev state_machine(struct Elev elevator){
             break;
         
         case IDLE:
-            get_orders(elevator.orders);
-            get_destination(elevator.orders, elevator.current_floor);
+            monitor_buttons(elevator.orders, elevator.current_floor);
             elevator.status = EXCECUTE;
             break;
         
@@ -71,8 +70,7 @@ struct Elev state_machine(struct Elev elevator){
             elev_set_motor_direction(DIRN_STOP);
             start_timer();
             while(!check_timer(3)){
-                get_orders(elevator.orders);
-                get_destination(elevator.orders, elevator.current_floor);
+                monitor_buttons(elevator.orders, elevator.current_floor);
             }
             print_matrix(elevator.orders);
             printf("\n");
@@ -92,8 +90,7 @@ struct Elev state_machine(struct Elev elevator){
             elev_set_motor_direction(DIRN_STOP);
             start_timer();
             while(!check_timer(3)){
-                get_orders(elevator.orders);
-                get_destination(elevator.orders, elevator.current_floor);
+                monitor_buttons(elevator.orders, elevator.current_floor);
             }
             if(elevator.stopped_at_intermediate){
                 elevator.stopped_at_intermediate = false;
