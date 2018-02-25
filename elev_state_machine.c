@@ -96,6 +96,7 @@ struct Elev state_machine(struct Elev elevator){
                 get_destination(elevator.orders, elevator.current_floor);
             }
             if(elevator.stopped_at_intermediate){
+                elevator.stopped_at_intermediate = false;
                 elevator.status = IN_TRANSIT;
             }
             else{
