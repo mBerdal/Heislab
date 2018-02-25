@@ -53,22 +53,16 @@ struct Elev state_machine(struct Elev elevator){
                 elevator.stopped_at_intermediate = true;
                 elevator.status = AT_ORDER;
                 printf("Stopped at intermediate at floor%d\n", elevator.current_floor);
-                print_matrix(elevator.orders);
-                printf("\n");
                 break;
             }
             if(is_at_order(elevator.orders, elevator.current_floor)){
                 elevator.status = AT_ORDER;
                 printf("Stopped at order at floor %d\n", elevator.current_floor);
-                print_matrix(elevator.orders);
-                printf("\n");
                 break;
             }
             if(is_at_destiantion(elevator.orders, elevator.current_floor)){
                 elevator.status = AT_DESTINATION;
                 printf("Stopped at destination at floor%d\n", elevator.current_floor);
-                print_matrix(elevator.orders);
-                printf("\n");
                 break;
             }
             elevator.status = IN_TRANSIT;
@@ -111,6 +105,8 @@ struct Elev state_machine(struct Elev elevator){
         default:
             break;
     }
+    print_matrix(elevator.orders);
+    printf("\n");
     elev_set_motor_direction(elevator.current_dir);
     return(elevator);
 }
